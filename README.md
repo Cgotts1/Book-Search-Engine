@@ -5,11 +5,9 @@ N/A
 
 ## <section id = "Description">Description</section>
 
-This is a backend web application that was made made using MongoDB and Express. Users of the application can make an account, add/delete friends, create/update thoughts and create reactions. Insomnia was used to test all get, post, put, and delete routes.
+This is a MERN web application that allows users to sign up, search for books, and save books to their profile. This application makes use of graphql, apollo express server, and JWT authentication. 
 
-Link to video demonstration: https://drive.google.com/file/d/1L6d3_9t114KoMCppGDGdinWhuvh0C1m6/view 
-
-![Social Media API](./images/image1.jpg)
+![Book-Search-Engine](./image1.png)
 
 ## Table of Contents
 1.) <a href = "#License">License</a><br>
