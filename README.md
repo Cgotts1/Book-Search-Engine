@@ -7,6 +7,8 @@ N/A
 
 This is a MERN web application that allows users to sign up, search for books, and save books to their profile. This application makes use of graphql, apollo express server, and JWT authentication. 
 
+Link to deployed application: https://powerful-meadow-94868.herokuapp.com/ 
+
 ![Book-Search-Engine](./image1.png)
 
 ## Table of Contents

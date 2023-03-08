@@ -5,6 +5,10 @@ const { AuthenticationError } = require('apollo-server-express');
 
 const resolvers = {
   Query: {
+
+    user: async (parent, { username }) => {
+      return User.findOne({ username }).populate('savedBooks');
+    },
     me: async (parent, args, context) => {
       if (context.user) {
         const userData = await User.findOne({ _id: context.user._id })
@@ -16,16 +20,11 @@ const resolvers = {
 
       throw new AuthenticationError('Not logged in');
     },
-    user: async (parent, { username }) => {
-      return await User.findOne({ username })
-        .select('-__v -password')
-        .populate('savedBooks');
-    },
   },
 
 
 
-  
+
 
   Mutation: {
     addUser: async (parent, { username, email, password }) => {
@@ -37,12 +36,12 @@ const resolvers = {
     login: async (parent, { email, password }) => {
       const user = await User.findOne({ email });
       if (!user) {
-        throw new AuthenticationError('Incorrect email or password');
+        throw new AuthenticationError('No user found with this email address');
       }
 
       const correctPw = await user.isCorrectPassword(password);
       if (!correctPw) {
-        throw new AuthenticationError('Incorrect email or password');
+        throw new AuthenticationError('Incorrect password');
       }
 
       const token = signToken(user);
@@ -184,201 +183,6 @@ module.exports = resolvers;
 // };
 
 // module.exports = resolvers;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// const { AuthenticationError } = require('apollo-server-express');
-// const { Profile } = require('../models');
-// const { signToken } = require('../utils/auth');
-
-// const resolvers = {
-//   Query: {
-//     profiles: async () => {
-//       return Profile.find();
-//     },
-
-//     profile: async (parent, { profileId }) => {
-//       return Profile.findById(profileId);
-//     },
-
-//     // By adding context to our query, we can retrieve the logged in user without specifically searching for them
-//     me: async (parent, args, context) => {
-//       if (context.user) {
-//         return Profile.findById(context.user._id);
-//       }
-//       throw new AuthenticationError('You need to be logged in!');
-//     },
-//   },
-
-//   Mutation: {
-//     addProfile: async (parent, { name, email, password }) => {
-//       const profile = await Profile.create({ name, email, password });
-//       const token = signToken(profile);
-
-//       return { token, profile };
-//     },
-
-//     login: async (parent, { email, password }) => {
-//       const profile = await Profile.findOne({ email });
-
-//       if (!profile) {
-//         throw new AuthenticationError('No profile with this email found!');
-//       }
-
-//       const correctPw = await profile.isCorrectPassword(password);
-
-//       if (!correctPw) {
-//         throw new AuthenticationError('Incorrect password!');
-//       }
-
-//       const token = signToken(profile);
-//       return { token, profile };
-//     },
-
-//     // Add a third argument to the resolver to access data in our `context`
-//     addSkill: async (parent, { profileId, skill }, context) => {
-//       // If context has a `user` property, that means the user executing this mutation has a valid JWT and is logged in
-//       if (context.user) {
-//         const profile = await Profile.findById(profileId);
-
-//         if (!profile) {
-//           throw new Error('Profile not found!');
-//         }
-
-//         if (profile._id.toString() !== context.user._id) {
-//           throw new AuthenticationError('You are not authorized to perform this action!');
-//         }
-
-//         profile.skills.push(skill);
-//         await profile.save();
-
-//         return profile;
-//       }
-
-//       // If user attempts to execute this mutation and isn't logged in, throw an error
-//       throw new AuthenticationError('You need to be logged in!');
-//     },
-
-//     // Set up mutation so a logged in user can only remove their profile and no one else's
-//     removeProfile: async (parent, args, context) => {
-//       if (context.user) {
-//         const profile = await Profile.findById(context.user._id);
-
-//         if (!profile) {
-//           throw new Error('Profile not found!');
-//         }
-
-//         await profile.remove();
-
-//         return profile;
-//       }
-
-//       throw new AuthenticationError('You need to be logged in!');
-//     },
-
-//     // Make it so a logged in user can only remove a skill from their own profile
-//     removeSkill: async (parent, { profileId, skill }, context) => {
-//       if (context.user) {
-//         const profile = await Profile.findById(profileId);
-
-//         if (!profile) {
-//           throw new Error('Profile not found!');
-//         }
-
-//         if (profile._id.toString() !== context.user._id) {
-//           throw new AuthenticationError('You are not authorized to perform this action!');
-//         }
-
-//         profile.skills = profile.skills.filter(s => s !== skill);
-//         await profile.save();
-
-//         return profile;
-//       }
-
-//       throw new AuthenticationError('You need to be logged in!');
-//     },
-//   },
-// };
-
-// module.exports = resolvers;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
