@@ -9,7 +9,8 @@ module.exports = {
   // function for our authenticated routes
   authMiddleware: function ({ req }) {
     // allows token to be sent via headers
-    const token = req.headers.authorization?.split(' ')[1] || '';
+    // const token = req.headers.authorization?.split(' ')[1] || '';
+    let token = req.body.token || req.query.token || req.headers.authorization;
 
     if (!token) {
       throw new Error('You have no token!');
