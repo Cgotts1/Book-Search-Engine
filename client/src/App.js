@@ -1,5 +1,3 @@
-
-
 import SearchBooks from './pages/SearchBooks';
 import SavedBooks from './pages/SavedBooks';
 import Navbar from './components/Navbar';
@@ -9,9 +7,6 @@ import Navbar from './components/Navbar';
 //   uri: 'http://localhost:3001/graphql',
 //   cache: new InMemoryCache(),
 // });
-
-
-
 
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
@@ -40,29 +35,9 @@ const authLink = setContext((_, { headers }) => {
 
 const client = new ApolloClient({
   link: authLink.concat(httpLink),
+  // uri: 'http://localhost:3001/graphql',
   cache: new InMemoryCache(),
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 function App() {
