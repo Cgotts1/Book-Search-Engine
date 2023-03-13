@@ -34,8 +34,8 @@ const [addUser] = useMutation(ADD_USER);
 
     try {
       // const response = await createUser(userFormData);
-      const response = await addUser(userFormData);
-      const { data } = await addUser({
+      // const response = await addUser(userFormData);
+      const { data, response } = await addUser({
         variables: { ...userFormData },
       });
       Auth.login(data.addUser.token);

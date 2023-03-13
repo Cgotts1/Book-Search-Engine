@@ -1,14 +1,7 @@
+import React from 'react';
 import SearchBooks from './pages/SearchBooks';
 import SavedBooks from './pages/SavedBooks';
 import Navbar from './components/Navbar';
-
-
-// const client = new ApolloClient({
-//   uri: 'http://localhost:3001/graphql',
-//   cache: new InMemoryCache(),
-// });
-
-import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import {
   ApolloClient,
