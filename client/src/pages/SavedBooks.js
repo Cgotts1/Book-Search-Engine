@@ -8,9 +8,11 @@ import { removeBookId } from '../utils/localStorage';
 import Auth from '../utils/auth';
 
 const SavedBooks = () => {
+  
+
   const { loading, error, data: userData } = useQuery(GET_ME);
   const [removeBook] = useMutation(REMOVE_BOOK);
-  // const [setUserData] = useState({});
+
 
 
   const handleDeleteBook = async (bookId) => {
@@ -27,7 +29,9 @@ const SavedBooks = () => {
 
       // upon success, remove book's id from localStorage
       removeBookId(bookId);
+      
     } catch (err) {
+      console.log("meow")
       console.error(err);
     }
   };
@@ -37,47 +41,10 @@ const SavedBooks = () => {
 
 
 
-
-
-
-
-
-
-
-
-  // const handleDeleteBook = async (bookId) => {
-  //       const token = Auth.loggedIn() ? Auth.getToken() : null;
-    
-  //       if (!token) {
-  //         return false;
-  //       }
-    
-  //       try {
-  //         const response = await removeBook(bookId, token);
-    
-  //         if (!response.ok) {
-  //           throw new Error('something went wrong!');
-  //         }
-    
-  //         const updatedUser = await response.json();
-  //         setUserData(updatedUser);
-  //         // upon success, remove book's id from localStorage
-  //         removeBookId(bookId);
-  //       } catch (err) {
-  //         console.error(err);
-  //       }
-  //     };
-
-
-
-
-
-
-
-
   if (loading) {
     return <h2>LOADING...</h2>;
   }
+
 
   if (error) {
     console.error(error);
